@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "id": "energy-and-geometry",
+  "name": "优化结果 · 电子能量与构型",
+  "criteria": [
+    {
+      "field": "energy",
+      "label": "最终电子能量",
+      "metric": "absolute",
+      "unit": "Eh",
+      "tolerance": 0.0001,
+      "weight": 2
+    },
+    {
+      "field": "geometry",
+      "label": "优化构型",
+      "metric": "rmsd",
+      "unit": "Å",
+      "tolerance": 0.1,
+      "weight": 3
+    }
+  ]
+}

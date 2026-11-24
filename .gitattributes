@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.png binary
+*.zip binary
+# Preserve the blank lines following molecular input blocks in the source examples.
+examples/*.gjf whitespace=-blank-at-eof
+examples/*.xyz whitespace=-blank-at-eof

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark"><title>Chembench Studio · 化学任务工作台</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand"><span class="brandmark" data-icon="brand"></span><div>Chembench<span>STUDIO</span></div></div>
+  <div class="navlabel">工作流程</div>
+  <nav aria-label="工作空间"><button data-page="structure" class="active"><i data-icon="molecule"></i><span>结构工作台<small lang="en">Structure</small></span></button><button data-page="task"><i data-icon="sliders"></i><span>任务配置<small lang="en">Protocol</small></span></button><button data-page="export"><i data-icon="package"></i><span>打包导出<small lang="en">Export</small></span></button></nav>
+  <div class="sidebottom"><button id="help"><i data-icon="book"></i>使用指南</button><div class="workspace"><span class="localmark"><i data-icon="drive"></i></span><div>本地工作空间<small>离线模式</small></div><span class="dot"></span></div></div>
+</aside>
+<main>
+  <header class="topbar"><div class="crumb">工作空间 <span>/</span> <strong id="crumb">结构工作台</strong></div><div class="topactions"><span id="save-state" role="status"></span><div id="language-switch" role="group" aria-label="界面语言"><button type="button" data-lang="zh" lang="zh-CN" aria-label="中文" aria-pressed="true">中文</button><button type="button" data-lang="en" lang="en" aria-label="English" aria-pressed="false">EN</button></div><button class="btn secondary" id="project-menu"><i data-icon="folder"></i>项目文件</button></div></header>
+  <section class="page" id="structure">
+    <div class="pagehead"><div><h1>结构工作台 <em lang="en">Structure</em></h1><p>检查分子结构与计算参数，为基准测试准备输入。</p></div><button class="btn primary import"><i data-icon="upload"></i>导入结构</button></div>
+    <div class="structure-grid">
+      <article class="card model-card"><div class="cardhead"><div class="panel-title"><i data-icon="cube"></i><h2>分子视图</h2><span class="panel-code" lang="en">MODEL VIEW</span></div><div class="seg" aria-label="结构视图"><button data-mode="model" class="active">模型</button><button data-mode="coords">坐标</button><button data-mode="source">原文</button></div></div>
+        <div id="view-host">
+          <div id="model"><canvas id="canvas" aria-label="三维分子球棍模型，可用方向键旋转，加减键缩放" tabindex="0"></canvas><div class="view-caption"><div id="formula"></div><span id="model-file"></span></div><div class="view-topright"><button id="style" title="切换球棍或空间填充模型">球棍模型 <i data-icon="swap"></i></button></div><div class="axis" aria-hidden="true"><canvas id="axis" width="100" height="100"></canvas></div><div class="orbit-help">拖动旋转 · 滚轮缩放</div><div class="viewcontrols"><button id="minus" title="缩小" aria-label="缩小">−</button><button id="plus" title="放大" aria-label="放大">+</button><button id="reset" title="复位视角" aria-label="复位视角"><i data-icon="reset"></i></button></div></div>
+          <div class="data-view" id="coords" hidden></div><div class="data-view" id="source" hidden><pre id="raw"></pre></div>
+        </div>
+        <div class="model-foot"><div id="legend"></div><span id="natoms"></span></div>
+      </article>
+      <article class="card properties glass"><div class="cardhead"><div class="panel-title"><i data-icon="sliders"></i><h2>计算参数</h2><span class="panel-code" lang="en">PARAMETERS</span></div><button class="textbtn" id="edit">编辑 <i data-icon="edit"></i></button></div><dl id="properties"></dl><div class="routebox"><div>Gaussian 路由</div><code id="route"></code></div></article>
+    </div>
+    <div id="warning" hidden></div>
+    <article class="card sourcecard glass"><div class="cardhead"><div class="panel-title"><i data-icon="file"></i><h2>输入文件</h2><span class="panel-code" lang="en">SOURCE</span></div><button class="textbtn import">替换文件 <i data-icon="swap"></i></button></div><div class="filebody"><div class="fileicon"><i data-icon="file"></i></div><div class="fileinfo"><b id="file-name"></b><small id="file-detail"></small></div><span class="pill" id="file-format"></span></div><div class="droparea" id="drop" role="button" tabindex="0"><i data-icon="upload"></i><span>拖入结构文件，或<strong>浏览文件</strong></span><small>GJF · COM · XYZ</small></div></article>
+  </section>
+  <section class="page" id="task" hidden><div class="pagehead"><div><h1>任务配置 <em lang="en">Protocol</em></h1><p>编写测试要求，定义参考答案与评分条件。</p></div><button class="btn primary" data-go="export">预览任务包 <i data-icon="arrow"></i></button></div>
+   <div class="form-grid"><article class="card formcard glass"><div class="panel-title"><i data-icon="sliders"></i><h2>任务定义</h2></div>
+    <label>任务名称<input id="title" maxlength="200"></label><label>任务标识<input id="task-id" spellcheck="false" placeholder="phenol-heavy-atoms"></label>
+    <div class="labelrow"><label for="kind">任务类型</label><button class="textbtn" id="add-kind">导入类型定义</button></div><select id="kind"></select><p id="kind-hint" class="hint"></p><div id="kind-fields"></div>
+    <label>给答题者的要求<textarea id="instructions" rows="6"></textarea></label>
+   </article><div class="stack"><article class="card formcard glass"><div class="panel-title"><i data-icon="target"></i><h2>评分依据</h2></div><label>评分标准<select id="rubric-mode"><option value="scalar">数值 · 容差判定</option><option value="geometry">完整构型 · 对齐 RMSD</option></select></label>
+    <div class="rule-actions"><button id="import-rubric" class="textbtn">导入规则 JSON</button><button id="save-rubric" class="textbtn">保存规则</button><button id="rule-guide" class="textbtn">AI 编写格式</button></div>
+    <div id="scalar-reference"><label>参考数值<input id="expected" inputmode="decimal"></label><label id="unit-row">答案单位<input id="answer-unit" placeholder="如 Eh、cm⁻¹，无量纲可留空"></label></div>
+    <div id="criterion-answers"></div><label id="tolerance-row"><span id="tolerance-label">绝对容差</span><input id="tolerance" type="number" min="0" step="any"></label>
+    <div id="reference-sources"></div>
+    <div class="answer-tools"><button class="btn secondary" id="load-output"><i data-icon="upload"></i>读取计算输出</button><button id="grade-kit" class="textbtn">下载独立评分包</button></div>
+    <p class="hint">Gaussian .log / .out、ORCA .out，或独立参考 XYZ。写入前可核对计算步、物理量与单位。</p></article><article class="card formcard glass"><div class="panel-title"><i data-icon="folder"></i><h2>补充材料</h2></div><p class="hint">随题分发的 UTF-8 文本，如参数表、拓扑或说明。</p><div id="assets"></div><button class="btn secondary" id="add-assets"><i data-icon="plus"></i>添加材料</button></article></div></div>
+  </section>
+  <section class="page" id="export" hidden><div class="pagehead"><div><h1>打包导出 <em lang="en">Export</em></h1><p>选择目标框架，核对目录后下载测试任务。</p></div><button class="btn primary" id="download"><i data-icon="download"></i>导出 ZIP</button></div>
+   <div class="form-grid"><article class="card formcard glass"><div class="panel-title"><i data-icon="package"></i><h2>目标框架</h2></div><div id="profiles"></div><div id="extra-fields"></div></article><article class="card formcard glass"><div class="panel-title"><i data-icon="folder"></i><h2>打包预览</h2></div><div id="preview"></div></article></div>
+  </section>
+</main>
+<dialog id="dialog"><div class="dialoghead"><h2 id="dialog-title"></h2><button id="close" class="iconbtn" aria-label="关闭">×</button></div><div id="dialog-body"></div></dialog>
+<input id="result-file" type="file" accept=".log,.out,.txt,.xyz,.g16,.g09" hidden><input id="rubric-file" type="file" accept=".json" hidden>
+<input id="file" type="file" accept=".gjf,.com,.xyz" hidden><input id="json-file" type="file" accept=".json" hidden><input id="type-file" type="file" accept=".json" hidden><input id="asset-files" type="file" multiple hidden>
+<div id="toast" role="status" hidden></div>
+<script src="i18n.js"></script><script src="i18n-chem.js"></script><script src="i18n-task.js"></script><script src="chemistry.js"></script><script src="rubrics.js"></script><script src="results.js"></script><script src="answer-book.js"></script><script src="adapters.js"></script><script src="harbor-index.js"></script><script src="sample.js"></script><script src="measurement.js"></script><script src="core.js"></script><script src="viewer.js"></script><script src="answer-ui.js"></script><script src="app.js"></script>
+</body></html>

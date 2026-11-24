@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "id": "energy-and-geometry",
+  "name": "Optimization results · electronic energy and geometry",
+  "criteria": [
+    {
+      "field": "energy",
+      "label": "Final electronic energy",
+      "metric": "absolute",
+      "unit": "Eh",
+      "tolerance": 0.0001,
+      "weight": 2
+    },
+    {
+      "field": "geometry",
+      "label": "Optimized geometry",
+      "metric": "rmsd",
+      "unit": "Å",
+      "tolerance": 0.1,
+      "weight": 3
+    }
+  ]
+}

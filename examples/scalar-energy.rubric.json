@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "id": "scalar",
+  "name": "数值 · 绝对误差",
+  "criteria": [
+    {
+      "field": "value",
+      "label": "数值答案",
+      "metric": "absolute",
+      "unit": "Eh",
+      "tolerance": 0.0001,
+      "weight": 1
+    }
+  ]
+}

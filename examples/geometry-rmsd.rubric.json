@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "id": "geometry",
+  "name": "构型 · 对齐 RMSD",
+  "criteria": [
+    {
+      "field": "geometry",
+      "label": "优化构型",
+      "metric": "rmsd",
+      "unit": "Å",
+      "tolerance": 0.1,
+      "weight": 1
+    }
+  ]
+}

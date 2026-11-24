@@ -1,0 +1,10 @@
+{
+  "id": "bond-distance",
+  "name": "键长测量（指定原子）",
+  "description": "对指定的两个原子计算欧氏距离，以 Å 为单位。",
+  "instructions": "根据输入的单帧笛卡尔坐标计算下列两个原子间的距离。原子从 1 开始编号，以 Å 为单位提交数值。",
+  "fields": [
+    {"key": "first", "label": "第一个原子编号", "type": "number", "required": true},
+    {"key": "second", "label": "第二个原子编号", "type": "number", "required": true}
+  ]
+}
